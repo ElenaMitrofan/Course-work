@@ -12,13 +12,16 @@ public class Main {
         System.out.println("Минимальная зп в месяц: " + getEmployeeWithMinSalary());
         System.out.println("Максимальная зп в месяц: " + getEmployeeWithMaxSalary());
         System.out.printf("Сумма затрат на зп в месяц: %.2f\n", getEmployeeSumSalary());
-        System.out.printf("Средняя зп в месяц: %.2f\n", getEmployeeSumSalary() / 2);
+        System.out.printf("Средняя зп в месяц: %.2f\n", getEmployeeSumSalary() / employees.length);
         printFullName();
     }
     public static String getAllInfo() {
         StringBuilder stringBuilder = new StringBuilder();
-        for (Employee employee : employees) {
-            stringBuilder.append(employee.toString()).append("\n");
+        for (int i = 0; i < employees.length; i++) {
+            if (employees[i] != null) {
+                Employee employee = employees[i];
+                stringBuilder.append(employee.toString()).append("\n");
+            }
         }
         return stringBuilder.toString();
     }
@@ -26,11 +29,13 @@ public class Main {
         double minSalary = Double.MAX_VALUE;
         Employee minEmployee = null;
         for (int i = 0; i < employees.length; i++) {
+            if (employees[i] != null) {
             Employee employee = employees[i];
             double minSalaryNew = min(minSalary, employee.getSalary());
             if (minSalaryNew != minSalary) {
                 minEmployee = employee;
                 minSalary = minSalaryNew;
+            }
             }
         }
         return minEmployee;
@@ -39,11 +44,13 @@ public class Main {
         double maxSalary = Double.MIN_VALUE;
         Employee maxEmployee = null;
         for (int i = 0; i < employees.length; i++) {
-            Employee employee = employees[i];
-            double maxSalaryNew = max(maxSalary, employee.getSalary());
-            if (maxSalaryNew != maxSalary) {
-                maxEmployee = employee;
-                maxSalary = maxSalaryNew;
+            if (employees[i] != null) {
+                Employee employee = employees[i];
+                double maxSalaryNew = max(maxSalary, employee.getSalary());
+                if (maxSalaryNew != maxSalary) {
+                    maxEmployee = employee;
+                    maxSalary = maxSalaryNew;
+                }
             }
         }
         return maxEmployee;
@@ -52,17 +59,21 @@ public class Main {
         double sumSalary = 0;
         Employee sumEmployee = null;
         for (int i = 0; i < employees.length; i++) {
-            Employee employee = employees[i];
-            double sumSalaryNew = sum(sumSalary, employee.getSalary());
-            sumSalary += i;
-            sumEmployee = employee;
-            sumSalary = sumSalaryNew;
+            if (employees[i] != null) {
+                Employee employee = employees[i];
+                double sumSalaryNew = sum(sumSalary, employee.getSalary());
+                sumSalary += i;
+                sumEmployee = employee;
+                sumSalary = sumSalaryNew;
+            }
         }
         return  sumSalary;
     }
     public static void printFullName() {
         for (int i = 0; i < employees.length; i++) {
-            System.out.println("ФИО сотрудника: " + employees[i].getFullName());
+            if (employees[i] != null) {
+                System.out.println("ФИО сотрудника: " + employees[i].getFullName());
+            }
         }
     }
 }
